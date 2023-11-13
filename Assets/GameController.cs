@@ -26,9 +26,10 @@ public class GameController : MonoBehaviour
     // 経過時刻を引いていく
     CountDownTime -= Time.deltaTime;
 
+    //タイマーが0になったらタイマーが止まる
     if (CountDownTime <= 0.0F)
         {
-            CountDownTime = 0.0F;
+            enabled = false;
         }
     }
 }
