@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
 
     Vector3 moveDirection = Vector3.zero;
     int targetLane;
-    int life = DefaultLife;
     float recoverTime = 0.0f;
     int canJump = 2;
 
@@ -26,10 +25,7 @@ public class PlayerController : MonoBehaviour
     public float speedJump;
     public float accelerationZ;
 
-    public int Life()
-    {
-        return life;
-    }
+ 
 
 
     void Start()

@@ -7,25 +7,28 @@ public class GameController : MonoBehaviour
 {
     public PlayerController player;
     public Text Timer;
-    public float countDownTime;
+    float CountDownTime;
+
+    bool GameOver()
+    {
+        return CountDownTime == 0;
+    }
 
     void Start () 
     {
-        countDownTime = 60.0f;
+        CountDownTime = 10.0f;
     }
    
     void Update()
     {
        // カウントダウンタイムを整形して表示
-    Timer.text = string.Format("Time: {0:00.00}", countDownTime);
+    Timer.text = string.Format("Time: {0:00.00}", CountDownTime);
     // 経過時刻を引いていく
-    countDownTime -= Time.deltaTime;
+    CountDownTime -= Time.deltaTime;
 
-    //タイマーが0になったらゲームオーバー
-    if (countDownTime == 0)
-    {
-        enabled = false;
-        
-    }
+    if (CountDownTime <= 0.0F)
+        {
+            CountDownTime = 0.0F;
+        }
     }
 }
