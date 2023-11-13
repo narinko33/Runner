@@ -20,5 +20,12 @@ public class GameController : MonoBehaviour
     Timer.text = string.Format("Time: {0:00.00}", countDownTime);
     // 経過時刻を引いていく
     countDownTime -= Time.deltaTime;
+
+    //タイマーが0になったらゲームオーバー
+    if (countDownTime == 0)
+    {
+        enabled = false;
+        
+    }
     }
 }
