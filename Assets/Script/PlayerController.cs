@@ -59,9 +59,6 @@ public class PlayerController : MonoBehaviour
             ScoreText.enabled = true;
             gameController.ShowSeore();
 
-            // gameController.ShowSeore();
-
-            // animator.SetBool("Blend", moveDirection.z < 0.0f);
 
         }
         else
@@ -75,7 +72,6 @@ public class PlayerController : MonoBehaviour
             moveDirection.x = ratioX * speedX;
 
             // 速度が0以上なら走っているフラグをtrueにする
-            // animator.SetBool("Blend", moveDirection.z > 0.0f);
             animator.SetFloat("Blend", acceleratedZ / speedZ);
 
         }
