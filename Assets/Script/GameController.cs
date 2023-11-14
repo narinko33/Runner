@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour
 
     int CalcScore()
     {
+        //進んだ距離の計算
         return (int)player.transform.position.z;
     }
 }
