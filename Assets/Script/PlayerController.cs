@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour
     const int MaxLane = 2;
     const float LaneWidth = 1.0f;
 
+    Vector3 startTouchPos;
+    Vector3 endTouchPos;
+
+    float flickValue_x;
+
 
     Rigidbody rd;
     bool isGrounded = false;
@@ -44,6 +49,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("left")) MoveToLeft();
         if (Input.GetKeyDown("right")) MoveToRight();
         if (Input.GetKeyDown("space")) Jump();
+
+        if (Input.GetMouseButtonDown(0)) Jump();
+        if (Input.GetMouseButtonDown(1) == true)
+        {
+            startTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+        }
+        if (Input.GetMouseButtonUp(1) == true)
+        {
+            endTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            FlickDirection();
+            GetDirection();
+        }
 
     }
 
@@ -83,6 +100,26 @@ public class PlayerController : MonoBehaviour
         rd.velocity = globalDirection;
 
 
+    }
+
+    void FlickDirection()
+    {
+        flickValue_x = endTouchPos.x - startTouchPos.x;
+        Debug.Log("x スワイプ量は" + flickValue_x);
+    }
+
+    void GetDirection()
+    {
+        if (flickValue_x > 50.0f)
+        {
+            MoveToRight();
+        }
+        else 
+        if (flickValue_x < -50.0f)
+        {
+           MoveToLeft();
+        }
+        
     }
 
     // 左のレーンに移動を開始
