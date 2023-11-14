@@ -44,14 +44,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("left")) MoveToLeft();
         if (Input.GetKeyDown("right")) MoveToRight();
         if (Input.GetKeyDown("space")) Jump();
-    }
 
-    void FixedUpdate()
-    {
         if (IsStop())
         {
             moveDirection.x = 0.0f;
             moveDirection.y = 0.0f;
+            moveDirection.z = 0.0f;
         }
         else
         {
@@ -64,6 +62,11 @@ public class PlayerController : MonoBehaviour
             moveDirection.x = ratioX * speedX;
 
         }
+    }
+
+    void FixedUpdate()
+    {
+
 
         // 重力分の力を毎フレーム追加
         if (!isGrounded) moveDirection.y -= gravity * Time.fixedDeltaTime;
