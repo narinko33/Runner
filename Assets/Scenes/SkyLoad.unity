@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 616694043}
-  - component: {fileID: 616694042}
+  - component: {fileID: 616694044}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -140,22 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &616694042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616694041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4283d9a1215d0ee439cabb1f9ef1bde5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 765013624}
-  Timer: {fileID: 1640351206}
-  Score: {fileID: 727576587}
-  CountDownTime: 15
 --- !u!4 &616694043
 Transform:
   m_ObjectHideFlags: 0
@@ -171,6 +155,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &616694044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616694041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f73472b66f347942ab32a1c64e21f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 765013628}
+  Timer: {fileID: 1640351206}
+  Score: {fileID: 727576587}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,31 +365,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &765013624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 765013618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa5e8f95bb604644987fdb2651a7c1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rd: {fileID: 0}
-  isGrounded: 0
-  animator: {fileID: 0}
-  gameController: {fileID: 616694042}
-  moveDirection: {x: 0, y: 0, z: 0}
-  targetLane: 0
-  canJump: 2
-  gravity: 20
-  speedZ: 5
-  speedX: 5
-  speedJump: 10
-  accelerationZ: 6
-  ScoreText: {fileID: 727576587}
 --- !u!136 &765013625
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -405,6 +379,25 @@ CapsuleCollider:
   m_Height: 1.9314269
   m_Direction: 1
   m_Center: {x: 0, y: 0.7898112, z: 0.03133452}
+--- !u!114 &765013628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765013618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a8ea1278cfe924d9d3a9c0af4d71e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 616694044}
+  gravity: 20
+  speedZ: 8
+  speedX: 8
+  speedJump: 8
+  accelerationZ: 8
+  ScoreText: {fileID: 727576587}
 --- !u!1 &796848104
 GameObject:
   m_ObjectHideFlags: 0
