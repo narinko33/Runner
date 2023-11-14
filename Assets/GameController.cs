@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +8,18 @@ public class GameController : MonoBehaviour
 {
     public PlayerController player;
     public Text Timer;
-    float CountDownTime = 60.0f;
+    public Text Score;
+    float CountDownTime = 5.0f;
 
     public float GetCountDownTime()
     {
         return this.CountDownTime;
+    }
+
+    public void ShowSeore()
+    {
+        int score = CalcScore();
+        Score.text = "SCORE : " + score + "m";
     }
 
     void Start()
@@ -31,5 +39,11 @@ public class GameController : MonoBehaviour
         {
             enabled = false;
         }
+
+    }
+
+    int CalcScore()
+    {
+        return (int)player.transform.position.z;
     }
 }

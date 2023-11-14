@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class PlayerController : MonoBehaviour
 
     Vector3 moveDirection = Vector3.zero;
     int targetLane;
-    float recoverTime = 0.0f;
     int canJump = 2;
 
     public float gravity;
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public float speedX;
     public float speedJump;
     public float accelerationZ;
+    public Text ScoreText;
 
 
     bool IsStop()
@@ -55,6 +56,10 @@ public class PlayerController : MonoBehaviour
             moveDirection.y = 0.0f;
             moveDirection.z = 0.0f;
             animator.SetFloat("Blend", 0.0f);
+            ScoreText.enabled = true;
+            gameController.ShowSeore();
+
+            // gameController.ShowSeore();
 
             // animator.SetBool("Blend", moveDirection.z < 0.0f);
 
