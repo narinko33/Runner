@@ -120,11 +120,19 @@ public class PlayerController : MonoBehaviour
             moveDirection.y = 0;
             canJump = 2;
         }
-        if (other.gameObject.tag == "Robo")
+        if (other.gameObject.tag == "BlueBox")
         {
+            gameController.AddTime();
             // ヒットしたオブジェクトは削除
             Destroy(other.gameObject);
         }
+        if (other.gameObject.tag == "RedBox")
+        {
+            gameController.DecreaseTime();
+            // ヒットしたオブジェクトは削除
+            Destroy(other.gameObject);
+        }
+
     }
     void OnCollisionExit(Collision other)
     {

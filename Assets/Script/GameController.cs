@@ -16,6 +16,16 @@ public class GameController : MonoBehaviour
         return this.CountDownTime;
     }
 
+    public void AddTime()
+    {
+        this.CountDownTime += 5.0f;
+    }
+
+    public void DecreaseTime()
+    {
+        this.CountDownTime -= 5.0f;
+    }
+
     public void ShowSeore()
     {
         int score = CalcScore();
