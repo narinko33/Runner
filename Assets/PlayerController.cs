@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rd;
     bool isGrounded = false;
     Animator animator;
+    GameController gameController;
 
     Vector3 moveDirection = Vector3.zero;
     int targetLane;
@@ -25,8 +26,11 @@ public class PlayerController : MonoBehaviour
     public float speedJump;
     public float accelerationZ;
 
- 
 
+    bool IsStop()
+    {
+        return gameController.GetCountDownTime() == 0;
+    }
 
     void Start()
     {
@@ -44,14 +48,22 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (IsStop())
+        {
+            moveDirection.x = 0.0f;
+            moveDirection.y = 0.0f;
+        }
+        else
+        {
+            // 徐々に加速しZ方向に常に前進させる
+            float acceleratedZ = moveDirection.z + (accelerationZ * Time.deltaTime);
+            moveDirection.z = Mathf.Clamp(acceleratedZ, 0, speedZ);
 
-        // 徐々に加速しZ方向に常に前進させる
-        float acceleratedZ = moveDirection.z + (accelerationZ * Time.deltaTime);
-        moveDirection.z = Mathf.Clamp(acceleratedZ, 0, speedZ);
+            // X方向は目標のポジションまでの差分の割合で速度を計算
+            float ratioX = (targetLane * LaneWidth - transform.position.x) / LaneWidth;
+            moveDirection.x = ratioX * speedX;
 
-        // X方向は目標のポジションまでの差分の割合で速度を計算
-        float ratioX = (targetLane * LaneWidth - transform.position.x) / LaneWidth;
-        moveDirection.x = ratioX * speedX;
+        }
 
         // 重力分の力を毎フレーム追加
         if (!isGrounded) moveDirection.y -= gravity * Time.fixedDeltaTime;
