@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
 {
     public PlayerController player;
     public Text Timer;
-    float CountDownTime = 10.0f;
+    float CountDownTime = 60.0f;
 
     public float GetCountDownTime()
     {

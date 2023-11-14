@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rd;
     bool isGrounded = false;
     Animator animator;
-    GameController gameController;
+    public GameController gameController;
 
     Vector3 moveDirection = Vector3.zero;
     int targetLane;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     bool IsStop()
     {
-        return gameController.GetCountDownTime() == 0;
+        return gameController.GetCountDownTime() <= 0.0f;
     }
 
     void Start()
@@ -45,11 +45,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("right")) MoveToRight();
         if (Input.GetKeyDown("space")) Jump();
 
+    }
+
+    void FixedUpdate()
+    {
         if (IsStop())
         {
             moveDirection.x = 0.0f;
             moveDirection.y = 0.0f;
             moveDirection.z = 0.0f;
+            animator.SetFloat("Blend", 0.0f);
+
+            // animator.SetBool("Blend", moveDirection.z < 0.0f);
+
         }
         else
         {
@@ -61,12 +69,11 @@ public class PlayerController : MonoBehaviour
             float ratioX = (targetLane * LaneWidth - transform.position.x) / LaneWidth;
             moveDirection.x = ratioX * speedX;
 
+            // 速度が0以上なら走っているフラグをtrueにする
+            // animator.SetBool("Blend", moveDirection.z > 0.0f);
+            animator.SetFloat("Blend", acceleratedZ / speedZ);
+
         }
-    }
-
-    void FixedUpdate()
-    {
-
 
         // 重力分の力を毎フレーム追加
         if (!isGrounded) moveDirection.y -= gravity * Time.fixedDeltaTime;
@@ -75,9 +82,7 @@ public class PlayerController : MonoBehaviour
         Vector3 globalDirection = transform.TransformDirection(moveDirection);
         rd.velocity = globalDirection;
 
-        // 速度が0以上なら走っているフラグをtrueにする
-        animator.SetBool("Blend", moveDirection.z > 0.0f);
-        Debug.Log(isGrounded);
+
     }
 
     // 左のレーンに移動を開始
