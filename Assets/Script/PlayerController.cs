@@ -14,13 +14,17 @@ public class PlayerController : MonoBehaviour
 
     float flickValue_x;
 
+    float startTouchTime;
+    float endTouchTime;
+    float flickTime;
+
 
     Rigidbody rd;
     bool isGrounded = false;
-    Animator animator;
+    public Animator animator;
     public GameController gameController;
 
-    Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
     int targetLane;
     int canJump = 2;
 
@@ -36,11 +40,15 @@ public class PlayerController : MonoBehaviour
     {
         return gameController.GetCountDownTime() <= 0.0f;
     }
-
-    void Start()
+    private void Awake()
     {
         rd = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
+
     }
 
     void Update()
@@ -50,16 +58,25 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("right")) MoveToRight();
         if (Input.GetKeyDown("space")) Jump();
 
-        if (Input.GetMouseButtonDown(0)) Jump();
-        if (Input.GetMouseButtonDown(1) == true)
+        if (Input.GetMouseButtonDown(0) == true)
         {
             startTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            startTouchTime = Time.time;
         }
-        if (Input.GetMouseButtonUp(1) == true)
+        if (Input.GetMouseButtonUp(0) == true)
         {
             endTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            endTouchTime = Time.time;
             FlickDirection();
-            GetDirection();
+            if (flickTime <= 0.1f)
+            {
+                Jump();
+            }
+            else
+            {
+                GetDirection();
+            }
+
         }
 
     }
@@ -68,17 +85,14 @@ public class PlayerController : MonoBehaviour
     {
         if (IsStop())
         {
-            moveDirection.x = 0.0f;
-            moveDirection.y = 0.0f;
-            moveDirection.z = 0.0f;
-            animator.SetFloat("Blend", 0.0f);
-            ScoreText.enabled = true;
-            gameController.ShowSeore();
 
+            gameController.GameOver();
 
         }
         else
         {
+            if (rd.isKinematic) return;
+
             // 徐々に加速しZ方向に常に前進させる
             float acceleratedZ = moveDirection.z + (accelerationZ * Time.deltaTime);
             moveDirection.z = Mathf.Clamp(acceleratedZ, 0, speedZ);
@@ -89,6 +103,7 @@ public class PlayerController : MonoBehaviour
 
             // 速度が0以上なら走っているフラグをtrueにする
             animator.SetFloat("Blend", acceleratedZ / speedZ);
+
 
         }
 
@@ -105,7 +120,10 @@ public class PlayerController : MonoBehaviour
     void FlickDirection()
     {
         flickValue_x = endTouchPos.x - startTouchPos.x;
+        flickTime = endTouchTime - startTouchTime;
+
         Debug.Log("x スワイプ量は" + flickValue_x);
+        Debug.Log("経過時間は" + flickTime);
     }
 
     void GetDirection()
@@ -114,12 +132,12 @@ public class PlayerController : MonoBehaviour
         {
             MoveToRight();
         }
-        else 
+        else
         if (flickValue_x < -50.0f)
         {
-           MoveToLeft();
+            MoveToLeft();
         }
-        
+
     }
 
     // 左のレーンに移動を開始
@@ -184,4 +202,11 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
         }
     }
+
+    public void SetSteerActive(bool active)
+    {
+        //Rigidbodyのオン、オフを切り替える
+        rd.isKinematic = !active;
+    }
+
 }
