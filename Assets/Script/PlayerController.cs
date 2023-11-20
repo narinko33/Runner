@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     {
         return gameController.GetCountDownTime() <= 0.0f;
     }
+
     private void Awake()
     {
         rd = GetComponent<Rigidbody>();
@@ -117,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void FlickDirection()
+    void FlickDirection() //デバッグ用
     {
         flickValue_x = endTouchPos.x - startTouchPos.x;
         flickTime = endTouchTime - startTouchTime;
@@ -130,11 +131,13 @@ public class PlayerController : MonoBehaviour
     {
         if (flickValue_x > 50.0f)
         {
+            FlickDirection();
             MoveToRight();
         }
         else
         if (flickValue_x < -50.0f)
         {
+            FlickDirection();
             MoveToLeft();
         }
 
@@ -154,6 +157,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        if (gameController.state == State.Ready) return;
         if (canJump >= 1)
         {
             moveDirection.y = speedJump;

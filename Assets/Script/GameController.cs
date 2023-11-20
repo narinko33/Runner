@@ -5,23 +5,32 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+//ゲームステート
+public enum State
+{
+    Ready,
+    Play,
+    GameOver
+}
+
 public class GameController : MonoBehaviour
 {
-    //ゲームステート
-    enum State
-    {
-        Ready,
-        Play,
-        GameOver
-    }
+    // //ゲームステート
+    // public enum State
+    // {
+    //     Ready,
+    //     Play,
+    //     GameOver
+    // }
 
-    State state;
+    public State state;
 
     public PlayerController player;
     public Text Timer;
     public Text Score;
     public Text StateText;
     float CountDownTime = 15.0f;
+
 
     public float GetCountDownTime()
     {
@@ -47,12 +56,10 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Ready();
-
     }
 
     void Update()
     {
-
 
     }
 
@@ -61,10 +68,9 @@ public class GameController : MonoBehaviour
         switch (state)
         {
             case State.Ready:
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonUp(0))
                 {
                     GameStart();
-
                 }
                 break;
             case State.Play:
@@ -95,10 +101,8 @@ public class GameController : MonoBehaviour
 
         player.SetSteerActive(false);
 
-
         StateText.text = "Ready";
         player.animator.SetFloat("Blend", 0.0f);
-
     }
 
     void GameStart()
@@ -129,9 +133,6 @@ public class GameController : MonoBehaviour
         player.animator.SetFloat("Blend", 0.0f);
         player.ScoreText.enabled = true;
         ShowSeore();
-
-
-
     }
 
     int CalcScore()
