@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //ゲームステート
@@ -15,21 +16,18 @@ public enum State
 
 public class GameController : MonoBehaviour
 {
-    // //ゲームステート
-    // public enum State
-    // {
-    //     Ready,
-    //     Play,
-    //     GameOver
-    // }
-
     public State state;
+
+    public int score;
+
+    int stop = 1;
 
     public PlayerController player;
     public Text Timer;
     public Text Score;
     public Text StateText;
-    float CountDownTime = 15.0f;
+    public Canvas ResultCanvas;
+    float CountDownTime = 5.0f;
 
 
     public float GetCountDownTime()
@@ -47,9 +45,10 @@ public class GameController : MonoBehaviour
         this.CountDownTime -= 5.0f;
     }
 
+
     public void ShowSeore()
     {
-        int score = CalcScore();
+        score = CalcScore();
         Score.text = "SCORE : " + score + "m";
     }
 
@@ -65,6 +64,7 @@ public class GameController : MonoBehaviour
 
     void LateUpdate()
     {
+        Debug.Log(state);
         switch (state)
         {
             case State.Ready:
@@ -77,18 +77,19 @@ public class GameController : MonoBehaviour
                 // カウントダウンタイムを整形して表示
                 Timer.text = string.Format("Time: {0:00.00}", CountDownTime);
                 // 経過時刻を引いていく
-                CountDownTime -= Time.deltaTime;
+                CountDownTime -= Time.deltaTime * stop;
 
                 //タイマーが0になったらタイマーが止まる
                 if (CountDownTime <= 0.0F)
                 {
-                    enabled = false;
+                    this.stop = 0;
+                    GameOver();
                 }
-                //タイマーが0になったらGameOver
-                if (CountDownTime <= 0.0f) GameOver();
                 break;
             case State.GameOver:
-                //タッチしたらタイトルシーンに移動
+                StateText.enabled = true;
+                StateText.text = "TIME OVER";
+                StartCoroutine(TimeOverOut());
 
                 break;
 
@@ -131,13 +132,26 @@ public class GameController : MonoBehaviour
         player.moveDirection.y = 0.0f;
         player.moveDirection.z = 0.0f;
         player.animator.SetFloat("Blend", 0.0f);
-        player.ScoreText.enabled = true;
-        ShowSeore();
+        // player.ScoreText.enabled = true;
+    }
+
+    public void GoRanking()
+    {
+        SceneManager.LoadScene("Ranking");
     }
 
     int CalcScore()
     {
         //進んだ距離の計算
         return (int)player.transform.position.z;
+    }
+
+    IEnumerator TimeOverOut()
+    {
+        yield return new WaitForSeconds(3.0f);
+        StateText.gameObject.SetActive(false);
+        ResultCanvas.gameObject.SetActive(true);
+        ShowSeore();
+
     }
 }
