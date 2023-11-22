@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour
 
     int stop = 1;
 
+    public bool isPause;
+
     public PlayerController player;
     public Text Timer;
     public Text Score;
@@ -43,6 +45,11 @@ public class GameController : MonoBehaviour
     public void DecreaseTime()
     {
         this.CountDownTime -= 5.0f;
+    }
+
+    public void SwitchPause()
+    {
+        isPause = !isPause;
     }
 
 
@@ -83,6 +90,7 @@ public class GameController : MonoBehaviour
                 if (CountDownTime <= 0.0F)
                 {
                     this.stop = 0;
+                    Timer.text = "Time: 00.00";
                     GameOver();
                 }
                 break;
