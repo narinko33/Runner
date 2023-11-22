@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public float speedJump;
     public float accelerationZ;
     public Text ScoreText;
+    public EventSystem eventSystem;
 
 
     bool IsStop()
@@ -59,12 +61,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("right")) MoveToRight();
         if (Input.GetKeyDown("space")) Jump();
 
-        if (Input.GetMouseButtonDown(0) == true)
+        if (Input.GetMouseButtonDown(0) == true && !eventSystem.IsPointerOverGameObject())
         {
             startTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
             startTouchTime = Time.time;
         }
-        if (Input.GetMouseButtonUp(0) == true)
+        if (Input.GetMouseButtonUp(0) == true && !eventSystem.IsPointerOverGameObject())
         {
             endTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
             endTouchTime = Time.time;
@@ -131,13 +133,11 @@ public class PlayerController : MonoBehaviour
     {
         if (flickValue_x > 50.0f)
         {
-            FlickDirection();
             MoveToRight();
         }
         else
         if (flickValue_x < -50.0f)
         {
-            FlickDirection();
             MoveToLeft();
         }
 
@@ -157,6 +157,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        if (gameController.isPause) return;
         if (gameController.state == State.Ready) return;
         if (canJump >= 1)
         {
