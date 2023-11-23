@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour
 
     void LateUpdate()
     {
-        Debug.Log(state);
+        // Debug.Log(state);
         switch (state)
         {
             case State.Ready:
