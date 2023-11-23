@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float accelerationZ;
     public Text ScoreText;
     public EventSystem eventSystem;
+    public EventSystem eventSystem;
 
 
     bool IsStop()
@@ -53,9 +54,10 @@ public class PlayerController : MonoBehaviour
     {
 
     }
-
     void Update()
     {
+        if (gameController.isPause) return;
+        Debug.Log("Update実行");
         // デバッグ用
         if (Input.GetKeyDown("left")) MoveToLeft();
         if (Input.GetKeyDown("right")) MoveToRight();
@@ -131,6 +133,7 @@ public class PlayerController : MonoBehaviour
 
     void GetDirection()
     {
+        Debug.Log("GetDirection実行");
         if (flickValue_x > 50.0f)
         {
             MoveToRight();
@@ -158,7 +161,9 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         if (gameController.isPause) return;
+        if (gameController.isPause) return;
         if (gameController.state == State.Ready) return;
+        Debug.Log("Jump実行");
         if (canJump >= 1)
         {
             moveDirection.y = speedJump;
