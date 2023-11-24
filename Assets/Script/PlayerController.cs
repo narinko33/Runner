@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 moveDirection = Vector3.zero;
     int targetLane;
-    int canJump = 2;
+    public int canJump = 2;
 
     public float gravity;
     public float speedZ;
@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     public float accelerationZ;
     public Text ScoreText;
     public EventSystem eventSystem;
-
 
     bool IsStop()
     {
@@ -86,6 +85,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // if (gameController.state == State.GameOver) return;
         if (IsStop())
         {
 

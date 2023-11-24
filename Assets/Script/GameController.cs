@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
     public Text Score;
     public Text StateText;
     public Canvas ResultCanvas;
+    public GameObject PauseBotton;
     float CountDownTime = 5.0f;
 
 
@@ -71,7 +72,7 @@ public class GameController : MonoBehaviour
 
     void LateUpdate()
     {
-        Debug.Log(state);
+        // Debug.Log(state);
         switch (state)
         {
             case State.Ready:
@@ -140,13 +141,15 @@ public class GameController : MonoBehaviour
         player.moveDirection.y = 0.0f;
         player.moveDirection.z = 0.0f;
         player.animator.SetFloat("Blend", 0.0f);
-        // player.ScoreText.enabled = true;
+        PauseBotton.SetActive(false);
+
+
     }
 
-    public void GoRanking()
-    {
-        SceneManager.LoadScene("Ranking");
-    }
+    // public void GoRanking()
+    // {
+    //     SceneManager.LoadScene("Ranking");
+    // }
 
     int CalcScore()
     {

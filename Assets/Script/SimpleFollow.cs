@@ -8,12 +8,13 @@ public class SimpleFollow : MonoBehaviour
 
     public GameObject target;  //追従ターゲットプロパティ
     public float followSpeed;
-    public Skybox sb;
+    public Material[] material;
 
     void Start()
     {
         diff = target.transform.position - transform.position;  //追従距離の計算
         // sb = GetComponent<Skybox>;
+        this.GetComponent<Skybox>().material = material[Random.Range(0, 3)];
 
     }
 

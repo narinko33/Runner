@@ -9,6 +9,7 @@ TagManager:
   - RedBox
   - BlueBox
   - Box
+  - FallLine
   layers:
   - Default
   - TransparentFX
