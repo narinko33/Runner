@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 moveDirection = Vector3.zero;
     int targetLane;
-    int canJump = 2;
+    public int canJump = 2;
 
     public float gravity;
     public float speedZ;
@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     public float accelerationZ;
     public Text ScoreText;
     public EventSystem eventSystem;
-
 
     bool IsStop()
     {
@@ -53,23 +52,20 @@ public class PlayerController : MonoBehaviour
     {
 
     }
+
     void Update()
     {
-        if (gameController.isPause) return;
-        Debug.Log("Update実行");
         // デバッグ用
         if (Input.GetKeyDown("left")) MoveToLeft();
         if (Input.GetKeyDown("right")) MoveToRight();
         if (Input.GetKeyDown("space")) Jump();
 
-        // if (Input.GetMouseButtonDown(0) == true && !eventSystem.IsPointerOverGameObject())
-        if (Input.GetMouseButtonDown(0) == true)
+        if (Input.GetMouseButtonDown(0) == true && !eventSystem.IsPointerOverGameObject())
         {
             startTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
             startTouchTime = Time.time;
         }
-        // if (Input.GetMouseButtonUp(0) == true && !eventSystem.IsPointerOverGameObject())
-        if (Input.GetMouseButtonUp(0) == true)
+        if (Input.GetMouseButtonUp(0) == true && !eventSystem.IsPointerOverGameObject())
         {
             endTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
             endTouchTime = Time.time;
@@ -89,6 +85,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // if (gameController.state == State.GameOver) return;
         if (IsStop())
         {
 
@@ -134,7 +131,6 @@ public class PlayerController : MonoBehaviour
 
     void GetDirection()
     {
-        Debug.Log("GetDirection実行");
         if (flickValue_x > 50.0f)
         {
             MoveToRight();
@@ -163,7 +159,6 @@ public class PlayerController : MonoBehaviour
     {
         if (gameController.isPause) return;
         if (gameController.state == State.Ready) return;
-        Debug.Log("Jump実行");
         if (canJump >= 1)
         {
             moveDirection.y = speedJump;

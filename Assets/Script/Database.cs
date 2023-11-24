@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class Database : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class Database : MonoBehaviour
                     break;
             }
         }
+        SceneManager.LoadScene("Ranking");
     }
 
 }

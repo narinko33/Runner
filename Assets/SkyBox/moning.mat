@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FS017_Night_Cubemap 1
+  m_Name: moning
   m_Shader: {fileID: 10700, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,27 +20,27 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BackTex:
-        m_Texture: {fileID: 2800000, guid: fd0a573276626584da3f1293fcd7f797, type: 3}
+        m_Texture: {fileID: 2800000, guid: 95fdc0a55d9b26a4c91f378509734c05, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DownTex:
-        m_Texture: {fileID: 2800000, guid: c952eb03fe2ac9a42ac3c5ac822c516a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 864946e2b515a414080fee401eca2422, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FrontTex:
-        m_Texture: {fileID: 2800000, guid: 077e264c78cc46d49923b5aff986242f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 53f7900a1eb1bb847acc0a249460b325, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LeftTex:
-        m_Texture: {fileID: 2800000, guid: 1f3d7c575615c0347aa51d0bc22f1567, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8f6c6678540f8c0498eae4a26065b1f6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RightTex:
-        m_Texture: {fileID: 2800000, guid: 0123ad43ba83faf47a3fa02276ba03c9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 65247aa78283304418e233f6d7983a2f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTex:
-        m_Texture: {fileID: 2800000, guid: 8f817f454fe4cdc4aabf11e6505cfc23, type: 3}
+        m_Texture: {fileID: 2800000, guid: ef31ee79206084e40a352dee2e02dff4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []

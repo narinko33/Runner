@@ -8,16 +8,10 @@ public class PauseController : MonoBehaviour
     public GameObject pauseCanvas;
     public GameController gameController;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-
     //ポーズ画面
     public void Pause()
     {
+        if (gameController.state == State.GameOver) return;
         Debug.Log("Pause実行");
         //ポーズボタン押したらpausecanvasが出てくる
         pauseCanvas.SetActive(true);
@@ -25,7 +19,6 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 0;
         // 佐々木修正案
         gameController.SwitchPause();
-
     }
     //ポーズ画面解除
     public void Active()
@@ -49,6 +42,19 @@ public class PauseController : MonoBehaviour
     public void OnStartButtonClicked(string sceneTitle)
     {
         SceneManager.LoadScene(sceneTitle);
+
+    }
+
+    //ポーズ画面から「リトライ」ボタンを押した処理
+    public void Retry()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+    }
+
+    void Start()
+    {
 
     }
 
