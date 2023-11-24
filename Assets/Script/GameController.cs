@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
     public Text StateText;
     public Canvas ResultCanvas;
     public GameObject PauseBotton;
-    float CountDownTime = 5.0f;
+    float CountDownTime = 15.0f;
 
 
     public float GetCountDownTime()
