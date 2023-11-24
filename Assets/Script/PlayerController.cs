@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     int targetLane;
     public int canJump = 2;
 
-    public float gravity;
+    float gravity = 20.0f;
     public float speedZ;
     public float speedX;
     public float speedJump;
@@ -170,6 +170,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Fly()
+    {
+        StartCoroutine(ResetFly(gravity));
+        gravity = 5.0f;
+    }
+
+    IEnumerator ResetFly(float gravity)
+    {
+        yield return new WaitForSeconds(2.0f);
+        this.gravity = gravity;
+    }
+
     void OnCollisionEnter(Collision other)
     {
 
@@ -191,6 +203,19 @@ public class PlayerController : MonoBehaviour
             // ヒットしたオブジェクトは削除
             Destroy(other.gameObject);
         }
+        if (other.gameObject.tag == "FlyBox")
+        {
+            Fly();
+            // ヒットしたオブジェクトは削除
+            Destroy(other.gameObject);
+        }
+        // if (other.gameObject.tag == "BoostBox")
+        // {
+        //     moveDirection.x *= 2;
+        //     moveDirection.z *= 2;
+        //     // ヒットしたオブジェクトは削除
+        //     Destroy(other.gameObject);
+        // }
 
     }
     void OnCollisionExit(Collision other)

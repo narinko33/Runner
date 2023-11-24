@@ -146,11 +146,6 @@ public class GameController : MonoBehaviour
 
     }
 
-    // public void GoRanking()
-    // {
-    //     SceneManager.LoadScene("Ranking");
-    // }
-
     int CalcScore()
     {
         //進んだ距離の計算
