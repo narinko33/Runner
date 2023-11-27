@@ -60,12 +60,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("right")) MoveToRight();
         if (Input.GetKeyDown("space")) Jump();
 
-        if (Input.GetMouseButtonDown(0) == true && !eventSystem.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0) == true)
         {
             startTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
             startTouchTime = Time.time;
         }
-        if (Input.GetMouseButtonUp(0) == true && !eventSystem.IsPointerOverGameObject())
+        if (Input.GetMouseButtonUp(0) == true)
         {
             endTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
             endTouchTime = Time.time;
@@ -85,7 +85,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // if (gameController.state == State.GameOver) return;
         if (IsStop())
         {
 

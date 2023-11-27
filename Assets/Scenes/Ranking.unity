@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ae99c98c235e74ca99f14c1314f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rdatabase: {fileID: 28038909}
+  getdatabase: {fileID: 28038909}
 --- !u!1 &28038906
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 28038908}
   - component: {fileID: 28038909}
   m_Layer: 0
-  m_Name: RDatabase
+  m_Name: GetDatabase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

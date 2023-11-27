@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class RDatabase : MonoBehaviour
+public class GetDatabase : MonoBehaviour
 {
     public User[] users;
     public GameObject scorePrefab;

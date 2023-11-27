@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class GetRankingManager : MonoBehaviour
 {
-    public RDatabase rdatabase;
+    public GetDatabase getdatabase;
 
     public void Start()
     {
@@ -19,6 +19,6 @@ public class GetRankingManager : MonoBehaviour
     // ランキングの取得
     public void GetRanking()
     {
-        StartCoroutine(rdatabase.GetRanking());
+        StartCoroutine(getdatabase.GetRanking());
     }
 }
