@@ -27,6 +27,11 @@ public class TitleController : MonoBehaviour, IPointerClickHandler
         canvas.SetActive(true);
     }
 
+    public void GoRanking()
+    {
+        SceneManager.LoadScene("Ranking");
+    }
+
     void Start()
     {
         // 別シーンからタイトルシーンに戻ってくるときの動き
