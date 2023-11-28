@@ -10,6 +10,9 @@ TagManager:
   - BlueBox
   - Box
   - FallLine
+  - Jet
+  - Bake
+  - Drone
   layers:
   - Default
   - TransparentFX
