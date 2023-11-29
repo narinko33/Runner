@@ -110,6 +110,7 @@ public class GameController : MonoBehaviour
         state = State.Ready;
 
         player.SetSteerActive(false);
+        PauseBotton.SetActive(false);
 
         StateText.text = "Ready";
         player.animator.SetFloat("Blend", 0.0f);
@@ -119,6 +120,7 @@ public class GameController : MonoBehaviour
     {
         state = State.Play;
         player.SetSteerActive(true);
+        PauseBotton.SetActive(true);
         StateText.enabled = false;
 
         // カウントダウンタイムを整形して表示

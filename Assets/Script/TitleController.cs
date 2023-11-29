@@ -4,43 +4,81 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class TitleController : MonoBehaviour, IPointerClickHandler
+public class TitleController : MonoBehaviour
 {
+    AudioSource se;
     public GameObject canvas;
-    public TitleController titleController;
 
     // タイトルシーンからステージシーンへ切り替え
     public void OnStartButtonClicked(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        se.Play();
+        StartCoroutine(SeGoScene(sceneName));
 
     }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        titleController.ActiveCanvas();
-
-    }
-
     public void ActiveCanvas()
     {
+        se.Play();
         canvas.SetActive(true);
     }
 
+    // タイトルシーンからランキングボタン押したらランキング画面に移動
     public void GoRanking()
     {
-        SceneManager.LoadScene("Ranking");
+        se.Play();
+        StartCoroutine(SeGoRanking());
+    }
+
+    // タイトルシーンからRuleボタンを押してルール画面に移動
+    public void GoRule()
+    {
+        se.Play();
+        StartCoroutine(SeGoRule());
+    }
+
+    // ステージ選択画面からBackボタンを押してタイトルシーンに戻る
+    public void ReturnTitle()
+    {
+        se.Play();
+        canvas.SetActive(false);
     }
 
     void Start()
     {
         // 別シーンからタイトルシーンに戻ってくるときの動き
         Time.timeScale = 1;
+        se = GetComponent<AudioSource>();
 
     }
 
     void Update()
     {
 
+    }
+
+    IEnumerator SeGoScene(string sceneName)
+    {
+        while (se.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        SceneManager.LoadScene(sceneName);
+    }
+    IEnumerator SeGoRanking()
+    {
+        while (se.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        SceneManager.LoadScene("Ranking");
+    }
+
+    IEnumerator SeGoRule()
+    {
+        while (se.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        SceneManager.LoadScene("Rule");
     }
 }

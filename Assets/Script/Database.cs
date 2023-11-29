@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Database : MonoBehaviour
 {
+    SendRankingManager sendRankingManager;
     public GameController gameController;
     public User[] users;
 

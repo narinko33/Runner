@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseController : MonoBehaviour
 {
+    AudioSource se;
     public GameObject pauseCanvas;
     public GameController gameController;
 
@@ -13,6 +14,7 @@ public class PauseController : MonoBehaviour
     {
         if (gameController.state == State.GameOver) return;
         Debug.Log("Pause実行");
+        se.Play();
         //ポーズボタン押したらpausecanvasが出てくる
         pauseCanvas.SetActive(true);
         //ポーズ
@@ -24,6 +26,7 @@ public class PauseController : MonoBehaviour
     public void Active()
     {
         Debug.Log("Active");
+        se.Play();
         //ステージシーンへ戻る
         pauseCanvas.SetActive(false);
         //ポーズ解除
@@ -41,24 +44,42 @@ public class PauseController : MonoBehaviour
     // ポーズ画面から「タイトルに戻る」ボタン押してタイトルシーンへ戻る
     public void OnStartButtonClicked(string sceneTitle)
     {
-        SceneManager.LoadScene(sceneTitle);
-
+        se.Play();
+        StartCoroutine(SeTitle());
     }
 
     //ポーズ画面から「リトライ」ボタンを押した処理
     public void Retry()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+        se.Play();
+        StartCoroutine(SeRetry());
     }
 
+    IEnumerator SeRetry()
+    {
+        while (se.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator SeTitle()
+    {
+        while (se.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Title");
+    }
     void Start()
     {
-
+        se = GetComponent<AudioSource>();
     }
 
     void Update()
     {
     }
 }
+

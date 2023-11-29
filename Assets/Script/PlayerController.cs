@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    const int MinLane = -2;
-    const int MaxLane = 2;
+    public int MinLane = -2;
+    public int MaxLane = 2;
     const float LaneWidth = 1.0f;
 
     Vector3 startTouchPos;
@@ -183,6 +183,7 @@ public class PlayerController : MonoBehaviour
     // FlyBoxを取ったら飛べる
     public void Fly()
     {
+        Jump();
         StartCoroutine(ResetFly(gravity));
         // 重力が20.0fから5.0fになる
         gravity = 5.0f;
