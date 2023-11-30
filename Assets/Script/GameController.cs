@@ -16,6 +16,7 @@ public enum State
 
 public class GameController : MonoBehaviour
 {
+
     public State state;
 
     public int score;
@@ -30,7 +31,7 @@ public class GameController : MonoBehaviour
     public Text StateText;
     public Canvas ResultCanvas;
     public GameObject PauseBotton;
-    float CountDownTime = 15.0f;
+    float CountDownTime = 40.0f;
 
 
     public float GetCountDownTime()

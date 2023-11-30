@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     bool isInvincible = false;
     public Animator animator;
     public GameController gameController;
+    public BGM bgm;
 
     public Vector3 moveDirection = Vector3.zero;
     int targetLane;
@@ -218,6 +219,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isInvincible) return;
         isInvincible = true;
+        bgm.InvincibleBGM();
         StartCoroutine(ResetInvincible());
 
     }
@@ -226,6 +228,7 @@ public class PlayerController : MonoBehaviour
         // 10秒後に元に戻る
         yield return new WaitForSeconds(10.0f);
         isInvincible = false;
+        bgm.MainBGM();
 
     }
 
@@ -264,7 +267,7 @@ public class PlayerController : MonoBehaviour
             // ヒットしたオブジェクトは削除
             Destroy(other.gameObject);
         }
-        if (other.gameObject.tag == "Bake")
+        if (other.gameObject.tag == "Bike")
         {
             Boost();
             // ヒットしたオブジェクトは削除

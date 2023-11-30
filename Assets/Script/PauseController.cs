@@ -61,6 +61,7 @@ public class PauseController : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
         }
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
