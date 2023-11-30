@@ -12,7 +12,7 @@ public class SpMecha : MonoBehaviour
         GameObject Mecha = mechas[Random.Range(0, mechas.Length)];
         GameObject sm = Instantiate(Mecha,
         new Vector3(tr.position.x, tr.position.y, tr.position.z),
-        Quaternion.identity);
+        Quaternion.Euler(0, 180, 0));
 
     }
 
