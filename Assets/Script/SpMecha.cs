@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class SpMecha : MonoBehaviour
 {
-    Transform tr;
     public GameObject[] mechas;
 
     public void MechaGenerator()
     {
         GameObject Mecha = mechas[Random.Range(0, mechas.Length)];
         GameObject sm = Instantiate(Mecha,
-        new Vector3(tr.position.x, tr.position.y, tr.position.z),
+        new Vector3(transform.position.x, transform.position.y, transform.position.z),
         Quaternion.Euler(0, 180, 0));
 
     }
@@ -20,7 +19,6 @@ public class SpMecha : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tr = GetComponent<Transform>();
         MechaGenerator();
     }
 
