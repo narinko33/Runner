@@ -5,10 +5,9 @@ using UnityEngine;
 public class SimpleFollow : MonoBehaviour
 {
     Vector3 diff;
-
     public GameObject target;  //追従ターゲットプロパティ
-    public float followSpeed;
     public Material[] material;
+    public float followSpeed;
 
     void Start()
     {

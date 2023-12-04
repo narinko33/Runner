@@ -10,9 +10,10 @@ public class StageGenerator : MonoBehaviour
 
     public Transform character;  //ターゲットキャラクターの指定
     public GameObject[] stageChips;  //ステージチッププレハブ配列
+    public List<GameObject> generatedStageList = new List<GameObject>();  //生成済みステージチップ保持リスト
     public int startChipIndex;  //自動生成開始インデックス
     public int preInstantiate;  //生成先読み個数
-    public List<GameObject> generatedStageList = new List<GameObject>();  //生成済みステージチップ保持リスト
+    
 
     // Start is called before the first frame update
     void Start()  //初期化処理

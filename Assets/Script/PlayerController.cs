@@ -6,43 +6,36 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public int MinLane = -2;
-    public int MaxLane = 2;
     const float LaneWidth = 1.0f;
-
     Vector3 playerPosition;
     Vector3 startTouchPos;
     Vector3 endTouchPos;
-
+    Rigidbody rd;
     AudioSource jumpSound;
-
+    int targetLane;
+    float boostZ;
     float flickValue_x;
-
     float startTouchTime;
     float endTouchTime;
     float flickTime;
     float noMovementTime = 0.0f;
     float noMovementThreshold = 2.0f;
-
-
-    Rigidbody rd;
+    float gravity = 20.0f;
     bool isGrounded = false;
     bool isInvincible = false;
     public Animator animator;
     public GameController gameController;
     public BGM bgm;
-
     public Vector3 moveDirection = Vector3.zero;
-    int targetLane;
+    public Text ScoreText;
+    public EventSystem eventSystem;
+    public int MinLane = -2;
+    public int MaxLane = 2;
     public int canJump = 2;
-    float gravity = 20.0f;
-    float boostZ;
     public float speedZ;
     public float speedX;
     public float speedJump;
     public float accelerationZ;
-    public Text ScoreText;
-    public EventSystem eventSystem;
 
     bool IsStop()
     {
@@ -60,7 +53,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         boostZ = speedZ;
-
     }
 
     void Update()
@@ -98,18 +90,14 @@ public class PlayerController : MonoBehaviour
                 //ボタンを押していた時間が0.1ｆ以上なら
                 GetDirection();
             }
-
         }
-
     }
 
     void FixedUpdate()
     {
         if (IsStop())
         {
-
             gameController.GameOver();
-
         }
         else
         {
@@ -135,8 +123,6 @@ public class PlayerController : MonoBehaviour
         // 移動実行
         Vector3 globalDirection = transform.TransformDirection(moveDirection);
         rd.velocity = globalDirection;
-
-
     }
 
     void FlickDirection() //デバッグ用
@@ -164,7 +150,6 @@ public class PlayerController : MonoBehaviour
             //スワイプ量が-50.0ｆ以下なら
             MoveToLeft();
         }
-
     }
 
     // 左のレーンに移動を開始
@@ -176,7 +161,6 @@ public class PlayerController : MonoBehaviour
     public void MoveToRight()
     {
         if (targetLane < MaxLane) targetLane++;
-
     }
 
     public void Jump()
@@ -221,7 +205,6 @@ public class PlayerController : MonoBehaviour
         if (speedZ > boostZ) return;
         StartCoroutine(ResetBoost(speedZ));
         this.speedZ = speedZ * 2.0f;
-
     }
 
     IEnumerator ResetBoost(float speedZ)
@@ -229,7 +212,6 @@ public class PlayerController : MonoBehaviour
         // 3秒後に元のスピードに戻る
         yield return new WaitForSeconds(3.0f);
         this.speedZ = speedZ;
-
     }
 
     // InvincibleBoxを取ったら無敵
@@ -239,7 +221,6 @@ public class PlayerController : MonoBehaviour
         isInvincible = true;
         bgm.InvincibleBGM();
         StartCoroutine(ResetInvincible());
-
     }
     IEnumerator ResetInvincible()
     {
@@ -247,13 +228,43 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(10.0f);
         isInvincible = false;
         bgm.MainBGM();
-
     }
 
+    void ReturnPosition()
+    {
+        //プレイヤーの位置を取得
+        Vector3 currentPlayerPosition = transform.position;
+        // プレイヤーの位置が前回のフレームと3ｍ以内の時
+        if (currentPlayerPosition.z - playerPosition.z <= 3.0f)
+        {
+            // プレイヤーの位置が変化しない時間を更新
+            noMovementTime += Time.deltaTime;
+
+            // プレイヤーの位置が変化しない時間が、指定した時間以上になった場合
+            if (noMovementTime >= noMovementThreshold)
+            {
+                // プレイヤーの位置が変化しなかったという処理を行う
+                // (ここでは、「2秒間プレイヤーの位置が変化しなかった」という文字列をログに出力する)
+                Debug.Log("2秒間プレイヤーの位置が変化しなかった");
+                //プレイヤーの位置を少し戻す
+                transform.position += new Vector3(0.0f, 20.0f, -20.0f);
+                moveDirection.z = 0;
+                //移動後の座標を代入
+                playerPosition = transform.position;
+                noMovementTime = 0f;
+            }
+        }
+        else
+        {
+            // プレイヤーの位置が変化した場合、プレイヤーの位置を更新し、
+            // プレイヤーの位置が変化しない時間をリセットする
+            playerPosition = currentPlayerPosition;
+            noMovementTime = 0f;
+        }
+    }
 
     void OnCollisionEnter(Collision other)
     {
-
         if (other.gameObject.tag == "Ground")
         {
             isGrounded = true;
@@ -297,41 +308,8 @@ public class PlayerController : MonoBehaviour
             // ヒットしたオブジェクトは削除
             Destroy(other.gameObject);
         }
-
     }
 
-    void ReturnPosition()
-    {
-        //プレイヤーの位置を取得
-        Vector3 currentPlayerPosition = transform.position;
-        // プレイヤーの位置が前回のフレームと3ｍ以内の時
-        if (currentPlayerPosition.z - playerPosition.z <= 3.0f)
-        {
-            // プレイヤーの位置が変化しない時間を更新
-            noMovementTime += Time.deltaTime;
-
-            // プレイヤーの位置が変化しない時間が、指定した時間以上になった場合
-            if (noMovementTime >= noMovementThreshold)
-            {
-                // プレイヤーの位置が変化しなかったという処理を行う
-                // (ここでは、「2秒間プレイヤーの位置が変化しなかった」という文字列をログに出力する)
-                Debug.Log("2秒間プレイヤーの位置が変化しなかった");
-                //プレイヤーの位置を少し戻す
-                transform.position += new Vector3(0.0f, 20.0f, -20.0f);
-                moveDirection.z = 0;
-                //移動後の座標を代入
-                playerPosition = transform.position;
-                noMovementTime = 0f;
-            }
-        }
-        else
-        {
-            // プレイヤーの位置が変化した場合、プレイヤーの位置を更新し、
-            // プレイヤーの位置が変化しない時間をリセットする
-            playerPosition = currentPlayerPosition;
-            noMovementTime = 0f;
-        }
-    }
     void OnCollisionExit(Collision other)
     {
         if (other.gameObject.tag == "Ground")
@@ -339,6 +317,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
     }
+
     void OnCollisionStay(Collision other)
     {
         if (other.gameObject.tag == "Ground")
@@ -351,6 +330,5 @@ public class PlayerController : MonoBehaviour
     {
         //Rigidbodyのオン、オフを切り替える
         rd.isKinematic = !active;
-
     }
 }

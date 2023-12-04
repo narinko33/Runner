@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class GetRankingManager : MonoBehaviour
 {
-    public GetDatabase getdatabase;
     AudioSource se;
-
+    public GetDatabase getdatabase;
     public void Start()
     {
         se = GetComponent<AudioSource>();
