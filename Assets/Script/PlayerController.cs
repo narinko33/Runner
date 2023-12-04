@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public int MaxLane = 2;
     const float LaneWidth = 1.0f;
 
+    Vector3 playerPosition;
     Vector3 startTouchPos;
     Vector3 endTouchPos;
 
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
     float startTouchTime;
     float endTouchTime;
     float flickTime;
+    float noMovementTime = 0.0f;
+    float noMovementThreshold = 2.0f;
 
 
     Rigidbody rd;
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour
         rd = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         jumpSound = GetComponent<AudioSource>();
+
     }
 
     void Start()
@@ -68,22 +72,30 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("right")) MoveToRight();
         if (Input.GetKeyDown("space")) Jump();
 
+        //ボタンを押した(タップした)ときの処理
         if (Input.GetMouseButtonDown(0) == true)
         {
+            //ボタンを押した瞬間の座標を取得
             startTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            //ボタンを押した瞬間の時間
             startTouchTime = Time.time;
         }
+        //ボタンから指を離した(タップが終わった)ときの処理
         if (Input.GetMouseButtonUp(0) == true)
         {
+            //ボタンから指が離れた瞬間の座標を取得
             endTouchPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            //ボタンから指が離れた瞬間の時間
             endTouchTime = Time.time;
             FlickDirection();
             if (flickTime <= 0.1f)
             {
+                //ボタンを押していた時間が0.1ｆ以下なら
                 Jump();
             }
             else
             {
+                //ボタンを押していた時間が0.1ｆ以上なら
                 GetDirection();
             }
 
@@ -114,7 +126,7 @@ public class PlayerController : MonoBehaviour
             // 速度が0以上なら走っているフラグをtrueにする
             animator.SetFloat("Blend", acceleratedZ / speedZ);
 
-
+            ReturnPosition();
         }
 
         // 重力分の力を毎フレーム追加
@@ -129,7 +141,9 @@ public class PlayerController : MonoBehaviour
 
     void FlickDirection() //デバッグ用
     {
+        //ボタンから指を離した瞬間の座標-ボタンを押した瞬間の座標＝スワイプ量
         flickValue_x = endTouchPos.x - startTouchPos.x;
+        //ボタンから指を離した瞬間の時間-ボタンを押した瞬間の時間＝ボタンを押していた時間
         flickTime = endTouchTime - startTouchTime;
 
         Debug.Log("x スワイプ量は" + flickValue_x);
@@ -141,11 +155,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log("GetDirection実行");
         if (flickValue_x > 50.0f)
         {
+            //スワイプ量が50.0ｆ以上なら
             MoveToRight();
         }
         else
         if (flickValue_x < -50.0f)
         {
+            //スワイプ量が-50.0ｆ以下なら
             MoveToLeft();
         }
 
@@ -165,10 +181,12 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        //ポーズ状態の時とステートがReady,GameOverの時はリターン
         if (gameController.isPause) return;
         if (gameController.state == State.Ready) return;
         if (gameController.state == State.GameOver) return;
         Debug.Log("Jump実行");
+
         if (canJump >= 1)
         {
             moveDirection.y = speedJump;
@@ -281,6 +299,39 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    void ReturnPosition()
+    {
+        //プレイヤーの位置を取得
+        Vector3 currentPlayerPosition = transform.position;
+        // プレイヤーの位置が前回のフレームと3ｍ以内の時
+        if (currentPlayerPosition.z - playerPosition.z <= 3.0f)
+        {
+            // プレイヤーの位置が変化しない時間を更新
+            noMovementTime += Time.deltaTime;
+
+            // プレイヤーの位置が変化しない時間が、指定した時間以上になった場合
+            if (noMovementTime >= noMovementThreshold)
+            {
+                // プレイヤーの位置が変化しなかったという処理を行う
+                // (ここでは、「2秒間プレイヤーの位置が変化しなかった」という文字列をログに出力する)
+                Debug.Log("2秒間プレイヤーの位置が変化しなかった");
+                //プレイヤーの位置を少し戻す
+                transform.position += new Vector3(0.0f, 20.0f, -20.0f);
+                moveDirection.z = 0;
+                //移動後の座標を代入
+                playerPosition = transform.position;
+                noMovementTime = 0f;
+            }
+        }
+        else
+        {
+            // プレイヤーの位置が変化した場合、プレイヤーの位置を更新し、
+            // プレイヤーの位置が変化しない時間をリセットする
+            playerPosition = currentPlayerPosition;
+            noMovementTime = 0f;
+        }
+    }
     void OnCollisionExit(Collision other)
     {
         if (other.gameObject.tag == "Ground")
@@ -300,6 +351,7 @@ public class PlayerController : MonoBehaviour
     {
         //Rigidbodyのオン、オフを切り替える
         rd.isKinematic = !active;
+
     }
 
 }

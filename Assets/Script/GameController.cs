@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour
     public Text StateText;
     public Canvas ResultCanvas;
     public GameObject PauseBotton;
-    float CountDownTime = 40.0f;
+    float CountDownTime = 2.0f;
 
 
     public float GetCountDownTime()
@@ -84,7 +84,7 @@ public class GameController : MonoBehaviour
                 break;
             case State.Play:
                 // カウントダウンタイムを整形して表示
-                Timer.text = string.Format("Time: {0:00.00}", CountDownTime);
+                Timer.text = string.Format("TIME: {0:00.00}", CountDownTime);
                 // 経過時刻を引いていく
                 CountDownTime -= Time.deltaTime * stop;
 
@@ -92,12 +92,13 @@ public class GameController : MonoBehaviour
                 if (CountDownTime <= 0.0F)
                 {
                     this.stop = 0;
-                    Timer.text = "Time: 00.00";
+                    Timer.text = "TIME: 00.00";
                     GameOver();
                 }
                 break;
             case State.GameOver:
                 StateText.enabled = true;
+                //StateTextの更新
                 StateText.text = "TIME OVER";
                 StartCoroutine(TimeOverOut());
 
@@ -113,7 +114,7 @@ public class GameController : MonoBehaviour
         player.SetSteerActive(false);
         PauseBotton.SetActive(false);
 
-        StateText.text = "Ready";
+        StateText.text = "READY";
         player.animator.SetFloat("Blend", 0.0f);
     }
 
@@ -125,7 +126,7 @@ public class GameController : MonoBehaviour
         StateText.enabled = false;
 
         // カウントダウンタイムを整形して表示
-        Timer.text = string.Format("Time: {0:00.00}", CountDownTime);
+        Timer.text = string.Format("TIME: {0:00.00}", CountDownTime);
         // 経過時刻を引いていく
         CountDownTime -= Time.deltaTime;
 
@@ -140,13 +141,10 @@ public class GameController : MonoBehaviour
     {
         state = State.GameOver;
 
-        player.moveDirection.x = 0.0f;
-        player.moveDirection.y = 0.0f;
-        player.moveDirection.z = 0.0f;
+        //プレイヤーの動きを止める
+        player.SetSteerActive(false);
         player.animator.SetFloat("Blend", 0.0f);
         PauseBotton.SetActive(false);
-
-
     }
 
     int CalcScore()
@@ -155,8 +153,10 @@ public class GameController : MonoBehaviour
         return (int)player.transform.position.z;
     }
 
+
     IEnumerator TimeOverOut()
     {
+        //3秒後に動くコルーチン
         yield return new WaitForSeconds(3.0f);
         StateText.gameObject.SetActive(false);
         ResultCanvas.gameObject.SetActive(true);

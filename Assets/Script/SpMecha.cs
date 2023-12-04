@@ -6,6 +6,7 @@ public class SpMecha : MonoBehaviour
 {
     public GameObject[] mechas;
 
+    //空のオブジェクトに配列に入れたメカの中からランダムで1つを作り出す
     public void MechaGenerator()
     {
         GameObject Mecha = mechas[Random.Range(0, mechas.Length)];
@@ -15,14 +16,11 @@ public class SpMecha : MonoBehaviour
 
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         MechaGenerator();
     }
 
-    // Update is called once per frame
     void Update()
     {
 

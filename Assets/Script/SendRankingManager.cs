@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class SendRankingManager : MonoBehaviour
 {
-    public AudioSource se;
+    AudioSource se;
     public GameObject ResultCanvas;
     public InputField input;
     public Database database;

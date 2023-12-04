@@ -7,7 +7,6 @@ public class BGM : MonoBehaviour
 {
     AudioSource bgm;
     public AudioClip[] Clips;
-    // Start is called before the first frame update
     void Start()
     {
         bgm = GetComponent<AudioSource>();

@@ -13,7 +13,8 @@ public class SimpleFollow : MonoBehaviour
     void Start()
     {
         diff = target.transform.position - transform.position;  //追従距離の計算
-        this.GetComponent<Skybox>().material = material[Random.Range(0, 3)];
+        //配列に入れたスカイボックスの中からランダムに設定
+        this.GetComponent<Skybox>().material = material[Random.Range(0, material.Length)];
 
     }
 
