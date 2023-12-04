@@ -353,5 +353,4 @@ public class PlayerController : MonoBehaviour
         rd.isKinematic = !active;
 
     }
-
 }
