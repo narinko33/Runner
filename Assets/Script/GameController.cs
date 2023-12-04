@@ -17,21 +17,18 @@ public enum State
 public class GameController : MonoBehaviour
 {
 
-    public State state;
-
-    public int score;
-
     int stop = 1;
-
+    public State state;
+    float CountDownTime = 2.0f;
+    public int score;
     public bool isPause;
-
     public PlayerController player;
     public Text Timer;
     public Text Score;
     public Text StateText;
     public Canvas ResultCanvas;
     public GameObject PauseBotton;
-    float CountDownTime = 2.0f;
+    
 
 
     public float GetCountDownTime()
@@ -101,9 +98,7 @@ public class GameController : MonoBehaviour
                 //StateTextの更新
                 StateText.text = "TIME OVER";
                 StartCoroutine(TimeOverOut());
-
                 break;
-
         }
     }
 
@@ -153,7 +148,6 @@ public class GameController : MonoBehaviour
         return (int)player.transform.position.z;
     }
 
-
     IEnumerator TimeOverOut()
     {
         //3秒後に動くコルーチン
@@ -161,7 +155,6 @@ public class GameController : MonoBehaviour
         StateText.gameObject.SetActive(false);
         ResultCanvas.gameObject.SetActive(true);
         ShowSeore();
-
     }
 
 }
