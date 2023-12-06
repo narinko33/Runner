@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class FadeBgm : MonoBehaviour
 {
-    AudioSource audioSource;
     bool IsFadeOut = true;
-    float FadeSeconds = 2.0f;//フェードしていく秒数
+    float FadeSeconds = 2.0f;//フェードする秒数(2秒かけてフェードしていく)
     float FadeDeltaTime = 0;
+    AudioSource audioSource;
 
     void Start()
     {
@@ -17,6 +17,9 @@ public class FadeBgm : MonoBehaviour
 
     void Update()
     {
+
+        // .clip.lengthでclipの長さを秒で取得
+        // .timeで現在の再生位置を秒単位で取得
         Debug.Log(audioSource.clip.length - audioSource.time);//デバッグ用
 
         if (audioSource.volume <= 0)// ボリュームが0以下のとき
@@ -44,7 +47,7 @@ public class FadeBgm : MonoBehaviour
         {
             FadeDeltaTime += Time.deltaTime;
             audioSource.volume = (float)(FadeDeltaTime / FadeSeconds);//フェードイン計算
-            if (audioSource.volume >= 1)// ボリュームが1以上
+            if (audioSource.volume >= 1)// ボリュームが1以上のとき
             {
                 IsFadeOut = true;
                 FadeDeltaTime = 0;

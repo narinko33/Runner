@@ -6,8 +6,29 @@ using UnityEngine.EventSystems;
 
 public class TitleController : MonoBehaviour
 {
-    AudioSource se;
     public GameObject canvas;
+    AudioSource se;
+
+    void Start()
+    {
+        Time.timeScale = 1;// 別シーンからタイトルシーンに戻ってくるときの動き
+        se = GetComponent<AudioSource>();
+
+    }
+
+    // GameStartボタンを押してステージ選択canvasが動く
+    public void ActiveCanvas()
+    {
+        se.Play();
+        canvas.SetActive(true);
+    }
+
+    // ステージ選択画面からBackボタンを押してタイトルシーンに戻る
+    public void ReturnTitle()
+    {
+        se.Play();
+        canvas.SetActive(false);
+    }
 
     // タイトルシーンからステージシーンへ切り替え
     public void OnStartButtonClicked(string sceneName)
@@ -16,13 +37,8 @@ public class TitleController : MonoBehaviour
         StartCoroutine(SeGoScene(sceneName));
 
     }
-    public void ActiveCanvas()
-    {
-        se.Play();
-        canvas.SetActive(true);
-    }
 
-    // タイトルシーンからランキングボタン押したらランキング画面に移動
+    // タイトルシーンからRankingボタン押したらランキング画面に移動
     public void GoRanking()
     {
         se.Play();
@@ -34,25 +50,6 @@ public class TitleController : MonoBehaviour
     {
         se.Play();
         StartCoroutine(SeGoRule());
-    }
-
-    // ステージ選択画面からBackボタンを押してタイトルシーンに戻る
-    public void ReturnTitle()
-    {
-        se.Play();
-        canvas.SetActive(false);
-    }
-
-    void Start()
-    {
-        // 別シーンからタイトルシーンに戻ってくるときの動き
-        Time.timeScale = 1;
-        se = GetComponent<AudioSource>();
-    }
-
-    void Update()
-    {
-
     }
 
     IEnumerator SeGoScene(string sceneName)
