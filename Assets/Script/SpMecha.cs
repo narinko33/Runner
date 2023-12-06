@@ -13,16 +13,10 @@ public class SpMecha : MonoBehaviour
         GameObject sm = Instantiate(Mecha,
         new Vector3(transform.position.x, transform.position.y, transform.position.z),
         Quaternion.Euler(0, 180, 0));
-
     }
 
     void Start()
     {
         MechaGenerator();
-    }
-
-    void Update()
-    {
-
     }
 }

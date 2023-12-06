@@ -47,12 +47,12 @@ public class PlayerController : MonoBehaviour
         rd = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         jumpSound = GetComponent<AudioSource>();
-
     }
 
     void Start()
     {
         boostZ = speedZ;
+        playerPosition = transform.position;
     }
 
     void Update()
@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour
             // 速度が0以上なら走っているフラグをtrueにする
             animator.SetFloat("Blend", acceleratedZ / speedZ);
 
+            //前回フレームのｚポジションとの差が3ｍ以内で2秒間経った時に位置を少し戻す
             ReturnPosition();
         }
 
@@ -186,6 +187,7 @@ public class PlayerController : MonoBehaviour
     // FlyBoxを取ったら飛べる
     public void Fly()
     {
+        canJump++;
         Jump();
         StartCoroutine(ResetFly(gravity));
         // 重力が20.0fから5.0fになる
@@ -234,10 +236,10 @@ public class PlayerController : MonoBehaviour
     {
         //プレイヤーの位置を取得
         Vector3 currentPlayerPosition = transform.position;
-        // プレイヤーの位置が前回のフレームと3ｍ以内の時
+        // プレイヤーの位置が前回のフレームと3ｍ以内かの判定
         if (currentPlayerPosition.z - playerPosition.z <= 3.0f)
         {
-            // プレイヤーの位置が変化しない時間を更新
+            // プレイヤーの位置が変化しない時間を更新(前回フレームのzのポジションとの差が3ｍいないは位置の変化なしと判定)
             noMovementTime += Time.deltaTime;
 
             // プレイヤーの位置が変化しない時間が、指定した時間以上になった場合
@@ -248,7 +250,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("2秒間プレイヤーの位置が変化しなかった");
                 //プレイヤーの位置を少し戻す
                 transform.position += new Vector3(0.0f, 20.0f, -20.0f);
-                moveDirection.z = 0;
+                moveDirection.z = 1;
                 //移動後の座標を代入
                 playerPosition = transform.position;
                 noMovementTime = 0f;

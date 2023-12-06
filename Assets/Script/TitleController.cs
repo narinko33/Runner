@@ -48,7 +48,6 @@ public class TitleController : MonoBehaviour
         // 別シーンからタイトルシーンに戻ってくるときの動き
         Time.timeScale = 1;
         se = GetComponent<AudioSource>();
-
     }
 
     void Update()

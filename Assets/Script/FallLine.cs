@@ -11,7 +11,7 @@ public class FallLine : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             player.transform.position += new Vector3(0.0f, 20.0f, -25.0f);
-            player.moveDirection.z = 0;
+            player.moveDirection.z = 1;
         }
     }
 

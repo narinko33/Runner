@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,20 +17,17 @@ public enum State
 
 public class GameController : MonoBehaviour
 {
-
     int stop = 1;
-    public State state;
-    float CountDownTime = 2.0f;
+    float CountDownTime = 15.0f;
     public int score;
     public bool isPause;
+    public State state;
     public PlayerController player;
     public Text Timer;
     public Text Score;
     public Text StateText;
     public Canvas ResultCanvas;
     public GameObject PauseBotton;
-    
-
 
     public float GetCountDownTime()
     {
@@ -63,11 +61,6 @@ public class GameController : MonoBehaviour
         Ready();
     }
 
-    void Update()
-    {
-
-    }
-
     void LateUpdate()
     {
         // Debug.Log(state);
@@ -84,6 +77,15 @@ public class GameController : MonoBehaviour
                 Timer.text = string.Format("TIME: {0:00.00}", CountDownTime);
                 // 経過時刻を引いていく
                 CountDownTime -= Time.deltaTime * stop;
+                //
+                if (CountDownTime <= 11.0f)
+                {
+                    Timer.color = Color.red;
+                }
+                else
+                {
+                    Timer.color = Color.black;
+                }
 
                 //タイマーが0になったらタイマーが止まる
                 if (CountDownTime <= 0.0F)
