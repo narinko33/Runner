@@ -14,7 +14,7 @@ public class GetDatabase : MonoBehaviour
     public IEnumerator GetRanking()
     {
         // リクエスト先URL
-        string url = "http://localhost/runner/getranking.py";
+        string url = "http://192.168.12.36/runner/getranking.py";
 
         // GETリクエスト送信
         using (UnityWebRequest uwr = UnityWebRequest.Get(url))

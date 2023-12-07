@@ -15,7 +15,7 @@ public class Database : MonoBehaviour
     public IEnumerator SendScore(InputField input)
     {
         // リクエスト先URL
-        string url = "http://localhost/runner/sendscore.py";
+        string url = "http://192.168.12.36/runner/sendscore.py";
 
         // リクエストパラメータを追加
         WWWForm form = new WWWForm();
