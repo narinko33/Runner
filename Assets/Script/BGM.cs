@@ -11,6 +11,7 @@ public class BGM : MonoBehaviour
     {
         bgm = GetComponent<AudioSource>();
         bgm.clip = Clips[0];
+
     }
 
     public void InvincibleBGM()
@@ -25,6 +26,7 @@ public class BGM : MonoBehaviour
         bgm.clip = Clips[0];
         bgm.pitch = 1;
         bgm.Play();
+        Debug.Log("OK");
     }
 
 

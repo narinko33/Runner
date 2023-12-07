@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Title.unity
     guid: 0707109a2ad506b449915f46d1a7673c
   - enabled: 1
+    path: Assets/Scenes/ObstacleStage.unity
+    guid: eb17964547968c545b682f0b433f44dd
+  - enabled: 1
     path: Assets/Scenes/SkyLoad.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
