@@ -18,7 +18,7 @@ public enum State
 public class GameController : MonoBehaviour
 {
     int stop = 1;
-    float CountDownTime = 15.0f;
+    float CountDownTime = 40.0f;
     public int score;
     public bool isPause;
     public State state;
