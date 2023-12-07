@@ -1348,7 +1348,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u30DD\u30FC\u30BA"
+  m_Text: PAUSE
 --- !u!222 &883071789
 CanvasRenderer:
   m_ObjectHideFlags: 0
